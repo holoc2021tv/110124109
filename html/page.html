@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <title>Trang bán hàng - Cây Cảnh</title>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../js/lib.js"></script>
+</head>
+<body class="bg-light">
+    <div class="container-fluid mt-4">
+        <div class="row align-items-start">
+            
+            <div class="col-md-8 col-lg-9">
+                <h3 class="mb-4 text-primary border-bottom pb-2 text-center">Danh sách sản phẩm</h3>
+                <div class="product-list row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3" id="product-list">
+                    </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3 position-sticky" style="top: 20px;">
+                <div class="cart-wrapper bg-white p-3 border rounded shadow-sm">
+                    <h4 class="mb-4 text-primary text-center">Giỏ hàng</h4>
+                    <div id="cart-list" class="mb-3" style="max-height: 400px; overflow-y: auto;">
+                        </div>
+                    <button type="button" onclick="printCart()" class="btn btn-primary w-100 fw-bold">Mua hàng</button>
+                </div>
+            </div>
+
+        </div> 
+    </div>
+
+    <script>
+        // 1. Hiển thị giao diện người dùng khi tải trang.
+        productList.forEach(item => {
+            addProduct(item.id, item.name, item.price, item.image, item.productLink);
+        });
+
+        // 2. Bắt sự kiện Thêm & Cập nhật số lượng (Event Delegation)
+        document.getElementById("product-list").addEventListener("click", function(e) {
+            if (e.target.classList.contains("add-to-cart")) {
+                const id = e.target.getAttribute("data-id");
+                const name = e.target.getAttribute("data-name");
+                const price = e.target.getAttribute("data-price");
+                const cartList = document.getElementById("cart-list");
+                
+                const existingItem = cartList.querySelector(`div[data-cart-id="${id}"]`);
+                
+                if (existingItem) {
+                    // Update: Tăng số lượng
+                    const qtySpan = existingItem.querySelector('.quantity');
+                    qtySpan.textContent = parseInt(qtySpan.textContent) + 1;
+                } else {
+                    // Create: Thêm mới thẻ vào giỏ
+                    const cartItem = document.createElement("div");
+                    cartItem.className = "cart-item d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom";
+                    cartItem.setAttribute("data-cart-id", id); 
+                    
+                    cartItem.innerHTML = `
+                        <span class="small">${name} - <span class="text-danger fw-bold">${price}đ</span> (SL: <span class="quantity text-primary fw-bold">1</span>)</span>
+                        <button class="btn btn-danger btn-sm remove-item" style="font-size: 0.75rem;">Xóa</button>
+                    `;
+                    cartList.appendChild(cartItem);
+                }
+            }
+        });
+
+        // 3. Bắt sự kiện Xóa khỏi giỏ (Delete DOM)
+        document.getElementById("cart-list").addEventListener("click", function(e) {
+            if (e.target.classList.contains("remove-item")) {
+                e.target.parentElement.remove();
+            }
+        });
+
+        // 4. Xử lý nút Mua hàng
+        function printCart() {
+            const cartList = document.getElementById("cart-list");
+            if (cartList.children.length === 0) {
+                alert("Giỏ hàng đang trống!");
+            } else {
+                alert("Đặt hàng thành công! Cảm ơn bạn đã mua sắm.");
+                cartList.innerHTML = ""; // Xóa trắng DOM giỏ hàng sau khi mua
+            }
+        }
+    </script>
+</body>
+</html>

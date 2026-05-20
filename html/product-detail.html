@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết Sản Phẩm</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../js/lib.js"></script>
+</head>
+<body class="bg-light">
+    <div class="container my-5" style="max-width: 900px;">
+        
+        <div class="mb-4">
+            <a href="page.html" class="btn btn-outline-secondary btn-sm">← Quay lại danh sách</a>
+        </div>
+
+        <div class="card shadow-sm p-4 bg-white border-0 rounded-3">
+            <div class="row g-4 align-items-start">
+                
+                <div class="col-md-5">
+                    <img id="p-image" src="" alt="Hình ảnh sản phẩm" class="img-fluid rounded w-100 object-fit-cover shadow-sm" style="max-height: 400px;">
+                </div>
+                
+                <div class="col-md-7">
+                    <h1 id="p-name" class="h2 fw-bold text-dark mb-3">Đang tải...</h1>
+                    <h2 id="p-price" class="h4 text-danger fw-semibold mb-4"></h2>
+                    <hr>
+                    <h3 class="h6 fw-bold text-secondary text-uppercase mb-2">Mô tả sản phẩm</h3>
+                    <p id="p-description" class="text-muted lh-base" style="text-align: justify;"></p>
+                </div>
+                
+            </div>
+        </div> 
+    </div>
+
+    <script>
+        // 1. Nhận Parameter từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id'); 
+
+        // 2. Khớp dữ liệu từ mảng productList (ở file lib.js)
+        const product = productList.find(p => p.id === productId);
+
+        // 3. Render giao diện an toàn (Chống XSS)
+        if (product) {
+            document.getElementById("p-image").src = product.image;
+            document.getElementById("p-image").alt = product.name;
+            
+            document.getElementById("p-name").textContent = product.name;
+            document.getElementById("p-price").textContent = "Giá bán lẻ: " + product.price + "đ";
+            document.getElementById("p-description").textContent = product.desc;
+        } else {
+            document.getElementById("p-name").textContent = "Lỗi: Không tìm thấy sản phẩm";
+            document.getElementById("p-description").textContent = "Vui lòng chọn lại từ trang danh sách.";
+        }
+    </script>
+</body>
+</html>
