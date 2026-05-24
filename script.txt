@@ -1,0 +1,30 @@
+Script
+Slide 1:
+Good morning. My name is Ho The Loc from class DA24TTC. Today I will present my Web project: Plant Shop System using HTML DOM.
+
+Slide 2:
+The project goals are: creating a dynamic UI, building a shopping cart using CRUD workflow, and writing secure JavaScript code.
+
+Slide 3:
+I used HTML and Bootstrap for layout, and centralized data in an Array. All logic is written in Vanilla JS without external libraries.
+
+Slide 4:
+For data management, storing products in an Array of Objects separates the data from the visual interface, making updates very easy.
+
+Slide 5:
+To build the UI securely, I used document.createElement. This prevents malicious code execution, known as XSS attacks, compared to using innerHTML.
+
+Slide 6:
+The DOM tree is assembled from the inside out. I use appendChild to build the hierarchy in memory before displaying it.
+
+Slide 7:
+To process user clicks instantly, I embedded the product ID and price directly into the buttons using HTML data-attributes.
+
+Slide 8:
+This is the core feature: Event Delegation. I attached ONE listener to the parent container instead of multiple buttons to save memory.
+
+Slide 9:
+For the details page, I pass the product ID through the URL and read it using URLSearchParams, then render it safely with textContent.
+
+Slide 10:
+Thank you for listening. I've prepared a question about Event Delegation, and I'm ready to answer any questions you have.
